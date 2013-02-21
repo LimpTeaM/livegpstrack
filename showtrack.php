@@ -37,7 +37,6 @@ $OUT = "
 <div class='row-fluid'>
 <div class='span5 offset1'>
 ";
-header('Refresh: 90; url='.$_SERVER["REQUEST_URI"]);
 if (!isset($_SESSION['user_id'])) {
 
     $OUT .= "Вы не авторизованны<br><br>
@@ -67,7 +66,7 @@ if (!isset($_SESSION['user_id'])) {
 	     
 
 } else {
-
+    header('Refresh: 90; url='.$_SERVER["REQUEST_URI"]);
     $name = $_SESSION['name'];
     $result=mysqli_query($link, "SELECT * FROM tracking WHERE name='$name' LIMIT 1");
     $alldevices=mysqli_query($link,"SELECT hash from tracking WHERE name='$name'");
@@ -121,7 +120,7 @@ if (mysqli_num_rows($result) == 0) {
 ";
 	
 } else {
- 		
+     		
     $OUT .= "
     <div id='myModal' class='modal hide fade' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
     <div class='modal-header'>
@@ -171,7 +170,8 @@ if (mysqli_num_rows($result) == 0) {
 	    }
 
 	    $OUT .= "<br><a href='javascript: history.go(-1)'><i class='icon-arrow-left'></i>Назад</a><br>
-		    <br><a href='showtrack.php?name=".$name."&hash=".$hash."&showtrack=1'><i class='icon-eye-open'></i>Показать весь трек</a>";
+		    <br><a href='showtrack.php?name=".$name."&hash=".$hash."&showtrack=1'><i class='icon-eye-open'></i>Показать весь трек</a>
+		    <br><a href='auth.php?logout=1' class='btn btn-info'>Выход</a>";
 }  else {
 
 
@@ -247,7 +247,7 @@ if (mysqli_num_rows($result) == 0) {
 } else { 
 	while ($row = mysqli_fetch_array($result)) {
 	    $hash = $row['hash'];
-	    $OUT .= "L.marker([".$row['lat'].",".$row['lon']."]).addTo(map).bindPopup('".$row['name']."<br> Cкорость: ".$row['speed']." км/ч<br> Время ".$row['timestamp']."');";
+	    $OUT .= "L.marker([".$row['lat'].",".$row['lon']."]).addTo(map).bindPopup('".$row['hash']."<br> Cкорость: ".$row['speed']." км/ч<br> Время ".$row['timestamp']."');";
     	    $OUT .= "map.setView([".$row['lat'].",".$row['lon']."],18);</script>";
 	    $OUT .= "<label class='label label-info'>".$row['hash']."</label>";
 	    $OUT .="<table class='table table-bordered'>
