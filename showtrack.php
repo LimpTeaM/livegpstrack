@@ -115,12 +115,29 @@ if (mysqli_num_rows($result) == 0) {
     </div>
   </div>
 </div>
+
+
 <br><a href='auth.php?logout=1' class='btn btn-info'>Выход</a>
 ";
 	
 } else {
  		
     $OUT .= "
+    <div id='myModal' class='modal hide fade' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+    <div class='modal-header'>
+    <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>×</button>
+    <h3 id='myModalLabel'>Добавление устройства</h3>
+    </div>
+    <div class='modal-body'>
+    <p>Чтобы добавить новое устройство для отображения на сайте измените адрес live слежения, добавив к нему ключ hash. </p>
+    <p>Допустим, Вам надо добавить устройство(имея уже одно по дефолту). Строка будет выглядеть так:
+    <p>http://map.limpteam.ru/track.php?lat={0}&lon={1}&amptimestamp={2}&hdop={3}&altitude={4}&speed={5}&name=[ваше имя при регистрации]<b>&hash=[имя нового устройства]</b></p>
+    </div>
+    <div class='modal-footer'>
+    <button class='btn' data-dismiss='modal' aria-hidden='true'>Зыкрыть</button>
+    </div>
+    </div>
+
     <div id='map' style='height: 600px; border-radius: 6px; box-shadow: 0 8px 16px -8px #222;'></div>
     </div>
     <div class='span3'>
@@ -132,12 +149,14 @@ if (mysqli_num_rows($result) == 0) {
     $hash=mysqli_real_escape_string($link, $_GET['hash']);
     $showhash=mysqli_query($link, "SELECT * from tracking WHERE name='$name' AND hash='$hash'");
     while ($row = mysqli_fetch_array($showhash)) {
-            $OUT .= "L.marker([".$row['lat'].",".$row['lon']."]).addTo(map).bindPopup('".$row['hash']." <br>Cкорость: ".$row['speed']."<br> Время: ".$row['timestamp']."').openPopup();";
+            $OUT .= "L.marker([".$row['lat'].",".$row['lon']."]).addTo(map).bindPopup('".$row['hash']." <br>Cкорость: ".$row['speed']." км/ч<br> Время: ".$row['timestamp']."');";
             $OUT .= "map.setView([".$row['lat'].",".$row['lon']."],18);</script>";
             $OUT .="<table class='table table-bordered'>
                     <tr><th>Последние координаты: </th></tr>
                     <tr><td>".$row['lat']." ".$row['lon']." </td></tr>
-                    <tr><th>Время:</th></tr><tr><td>".$row['timestamp']."</td></tr>
+                    <tr><th>Скорость</th></tr>
+		    <tr><td>".$row['speed']." км/ч</td><tr>
+		    <tr><th>Время:</th></tr><tr><td>".$row['timestamp']."</td></tr>
                     <tr><th>Точность:</th></tr> ";
 	    if ($row['hdop'] > 15) {
                 $OUT .= "<tr><td><font color=red>Ниже среднего</font> (".$row['hdop'].")</td></tr>";
@@ -165,7 +184,7 @@ if (mysqli_num_rows($result) == 0) {
 		$OUT.= "L.marker([".$row['lat'].",".$row['lon']."]).addTo(map).bindPopup('".$row['hash']."');";
 		}
     		$OUT.="</script>";
-		$OUT.="<br><a href='showtrack.php?name=".$name."&showallpoints=1'><i class='icon-map-marker'></i>Показать все мои устройства на карте</a>
+		$OUT.="<br><a href='showtrack.php?name=".$name."&showallpoints=1'><i class='icon-map-marker'></i>Показать все мои устройства на карте</a><br>
 		     <a href='javascript: history.go(-1)'><i class='icon-arrow-left'></i>Назад</a><br><br>
                      <br><a href='auth.php?logout=1' class='btn btn-info'>Выход</a>";
 
@@ -226,11 +245,13 @@ if (mysqli_num_rows($result) == 0) {
 } else { 
 	while ($row = mysqli_fetch_array($result)) {
 	    $hash = $row['hash'];
-	    $OUT .= "L.marker([".$row['lat'].",".$row['lon']."]).addTo(map).bindPopup('".$row['name']."<br> Cкорость: ".$row['speed']."<br> Время ".$row['timestamp']."').openPopup();";
+	    $OUT .= "L.marker([".$row['lat'].",".$row['lon']."]).addTo(map).bindPopup('".$row['name']."<br> Cкорость: ".$row['speed']." км/ч<br> Время ".$row['timestamp']."');";
     	    $OUT .= "map.setView([".$row['lat'].",".$row['lon']."],18);</script>";
 	    $OUT .="<table class='table table-bordered'>
 		    <tr><th>Последние координаты: </th></tr>
 		    <tr><td>".$row['lat']." ".$row['lon']." </td></tr>
+		    <tr><th>Скорость</th></tr>
+		    <tr><td>".$row['speed']." км/ч</td><tr>
 		    <tr><th>Время:</th></tr><tr><td>".$row['timestamp']."</td></tr>
 		    <tr><th>Точность:</th></tr> ";
 	    if ($row['hdop'] > 15) {
@@ -245,6 +266,7 @@ if (mysqli_num_rows($result) == 0) {
 	while ($row = mysqli_fetch_array($alldevices)) {
 	    $OUT.="<a href=showtrack.php?name=".$name."&hash=".$row['hash']."&delete=1><i class='icon-trash'></i></a> <a href='showtrack.php?name=".$name."&hash=".$row['hash']."&view=1'>".$row['hash']."</a><br>";
 	    }
+	$OUT.="<a href='#myModal' role='button' data-toggle='modal'><i class='icon-plus'></i>Добавить устройство</a>";
 	$OUT.="     <br><a href='showtrack.php?name=".$name."&showallpoints=1'><i class='icon-map-marker'></i>Показать все мои устройства на карте</a>
 		    <br><a href='showtrack.php?name=".$name."&hash=".$hash."&showtrack=1'><i class='icon-eye-open'></i>Показать весь трек</a><br>
 		    <br><a href='auth.php?logout=1' class='btn btn-info'>Выход</a>
