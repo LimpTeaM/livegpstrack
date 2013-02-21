@@ -3,8 +3,13 @@ Hello!
 This is a personal gps tracking cms for android devices with OSMAnd application.
 And for GPS trackers (TODO).
 
-    How to setup.
-===============
+Live Demo
+---------------
+Demo[1]
+You must to register and add your device. 
+
+How to setup.
+---------------
 1.You  need a webserver with php5 and mysql.
 
 2 Download files: 
@@ -31,3 +36,5 @@ Many todo. security issues too :D
 
 
 p.s. i'm not programmer :).
+
+[1]: http://map.limpteam.ru

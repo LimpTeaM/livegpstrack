@@ -151,7 +151,8 @@ if (mysqli_num_rows($result) == 0) {
     while ($row = mysqli_fetch_array($showhash)) {
             $OUT .= "L.marker([".$row['lat'].",".$row['lon']."]).addTo(map).bindPopup('".$row['hash']." <br>Cкорость: ".$row['speed']." км/ч<br> Время: ".$row['timestamp']."');";
             $OUT .= "map.setView([".$row['lat'].",".$row['lon']."],18);</script>";
-            $OUT .="<table class='table table-bordered'>
+            $OUT .= "<label class='label label-info'>".$row['hash']."</label>";
+	    $OUT .="<table class='table table-bordered'>
                     <tr><th>Последние координаты: </th></tr>
                     <tr><td>".$row['lat']." ".$row['lon']." </td></tr>
                     <tr><th>Скорость</th></tr>
@@ -166,7 +167,7 @@ if (mysqli_num_rows($result) == 0) {
 	    $OUT .= "</table>Ваши устройства:<br>";
 	    }
     while ($row = mysqli_fetch_array($alldevices)) {
-	    $OUT.="<a href=showtrack.php?name=".$name."&hash=".$row['hash']."&delete=1><i class='icon-trash'></i></a> <a href='showtrack.php?name=".$name."&hash=".$row['hash']."&view=1'>".$row['hash']."</a><br>";
+	    $OUT.="<a href=showtrack.php?name=".$name."&hash=".$row['hash']."&delete=1><i class='icon-trash'></i></a> <a href='showtrack.php?name=".$name."&hash=".$row['hash']."&view=1'><span class='label label-info'>".$row['hash']."</span></a><br>";
 	    }
 
 	    $OUT .= "<br><a href='javascript: history.go(-1)'><i class='icon-arrow-left'></i>Назад</a><br>
@@ -197,6 +198,7 @@ if (mysqli_num_rows($result) == 0) {
 	$hash=mysqli_real_escape_string($link, $_GET['hash']);
         $name=mysqli_real_escape_string($link,$_GET['name']);
 	$showall=mysqli_query($link,"SELECT lat,lon,hash  FROM archive WHERE name='$name' AND hash='$hash'");
+
 	$OUT .= "
 	    var track = {
 	    'type': 'FeatureCollection',
@@ -247,6 +249,7 @@ if (mysqli_num_rows($result) == 0) {
 	    $hash = $row['hash'];
 	    $OUT .= "L.marker([".$row['lat'].",".$row['lon']."]).addTo(map).bindPopup('".$row['name']."<br> Cкорость: ".$row['speed']." км/ч<br> Время ".$row['timestamp']."');";
     	    $OUT .= "map.setView([".$row['lat'].",".$row['lon']."],18);</script>";
+	    $OUT .= "<label class='label label-info'>".$row['hash']."</label>";
 	    $OUT .="<table class='table table-bordered'>
 		    <tr><th>Последние координаты: </th></tr>
 		    <tr><td>".$row['lat']." ".$row['lon']." </td></tr>
@@ -264,7 +267,7 @@ if (mysqli_num_rows($result) == 0) {
     }
 //все точки юзера из базы
 	while ($row = mysqli_fetch_array($alldevices)) {
-	    $OUT.="<a href=showtrack.php?name=".$name."&hash=".$row['hash']."&delete=1><i class='icon-trash'></i></a> <a href='showtrack.php?name=".$name."&hash=".$row['hash']."&view=1'>".$row['hash']."</a><br>";
+	    $OUT.="<a href=showtrack.php?name=".$name."&hash=".$row['hash']."&delete=1><i class='icon-trash'></i></a> <a href='showtrack.php?name=".$name."&hash=".$row['hash']."&view=1'><span class='label label-info'>".$row['hash']."</span></a><br>";
 	    }
 	$OUT.="<a href='#myModal' role='button' data-toggle='modal'><i class='icon-plus'></i>Добавить устройство</a>";
 	$OUT.="     <br><a href='showtrack.php?name=".$name."&showallpoints=1'><i class='icon-map-marker'></i>Показать все мои устройства на карте</a>
