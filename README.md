@@ -5,7 +5,8 @@ And for GPS trackers (TODO).
 
 Live Demo
 ---------------
-[Demo][1]
+[Demo][1] (Russian)
+
 You must to register and add your device. 
 
 How to setup.
