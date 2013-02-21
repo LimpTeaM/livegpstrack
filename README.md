@@ -5,7 +5,7 @@ And for GPS trackers (TODO).
 
 Live Demo
 ---------------
-Demo[1]
+[Demo][1]
 You must to register and add your device. 
 
 How to setup.
@@ -37,4 +37,4 @@ Many todo. security issues too :D
 
 p.s. i'm not programmer :).
 
-[1]: http://map.limpteam.ru
+[1]: http://map.limpteam.ru "Demo"
