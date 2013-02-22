@@ -47,7 +47,7 @@ echo "
 </div>
 <script>
       var map = L.map('map').setView([55.76, 37.64], 10);
-      map.locate({setView: true, maxZoom: 18 });
+      map.locate({setView: true, enableHighAccuracy: true, maxZoom: 18 });
       L.tileLayer('http://{s}.tile.cloudmade.com/6a47c48f55494a5f92c09fce0caf2051/997/256/{z}/{x}/{y}.png', {maxZoom: 18,}).addTo(map);
 ";
 
