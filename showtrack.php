@@ -237,7 +237,7 @@ if (mysqli_num_rows($result) == 0) {
     $hash=mysqli_real_escape_string($link, $_GET['hash']);
     $name=mysqli_real_escape_string($link,$_GET['name']);
     $delhash=mysqli_query($link, "DELETE from tracking WHERE name='$name' AND hash='$hash'");
-    $delhasharch=mysqli_query($link,"DELETE from tracking WHERE name='$name' AND hash='$hash'");
+    $delhasharch=mysqli_query($link,"DELETE from archive WHERE name='$name' AND hash='$hash'");
     if (($delhash) and ($delhasharch)) {
     header("Location:showtrack.php");
     } else {
