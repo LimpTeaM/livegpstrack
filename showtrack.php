@@ -66,7 +66,6 @@ if (!isset($_SESSION['user_id'])) {
 	     
 
 } else {
-    header('Refresh: 90; url='.$_SERVER["REQUEST_URI"]);
     $name = $_SESSION['name'];
     $result=mysqli_query($link, "SELECT * FROM tracking WHERE name='$name' LIMIT 1");
     $alldevices=mysqli_query($link,"SELECT hash from tracking WHERE name='$name'");
@@ -146,6 +145,7 @@ if (mysqli_num_rows($result) == 0) {
       L.tileLayer('http://{s}.tile.cloudmade.com/6a47c48f55494a5f92c09fce0caf2051/997/256/{z}/{x}/{y}.png', {maxZoom: 18,}).addTo(map);
     ";
     if ($_GET['view'] == '1') {
+    header('Refresh: 90; url='.$_SERVER["REQUEST_URI"]);
     $hash=mysqli_real_escape_string($link, $_GET['hash']);
     $showhash=mysqli_query($link, "SELECT * from tracking WHERE name='$name' AND hash='$hash'");
     while ($row = mysqli_fetch_array($showhash)) {
@@ -198,7 +198,7 @@ if (mysqli_num_rows($result) == 0) {
     if ($_GET['showtrack'] == '1')  {
 	$hash=mysqli_real_escape_string($link, $_GET['hash']);
         $name=mysqli_real_escape_string($link,$_GET['name']);
-	$showall=mysqli_query($link,"SELECT lat,lon,hash  FROM archive WHERE name='$name' AND hash='$hash'");
+	$showall=mysqli_query($link,"SELECT lat,lon,hash  FROM archive WHERE name='$name' AND hash='$hash' ORDER BY timestamp");
 
 	$OUT .= "
 	    var track = {
@@ -245,7 +245,8 @@ if (mysqli_num_rows($result) == 0) {
     }
 
 
-} else { 
+} else {
+	header('Refresh: 90; url='.$_SERVER["REQUEST_URI"]); 
 	while ($row = mysqli_fetch_array($result)) {
 	    $hash = $row['hash'];
 	    $OUT .= "L.marker([".$row['lat'].",".$row['lon']."]).addTo(map).bindPopup('".$row['hash']."<br> Cкорость: ".$row['speed']." км/ч<br> Время ".$row['timestamp']."');";
