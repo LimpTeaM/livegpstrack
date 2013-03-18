@@ -132,7 +132,7 @@ if (mysqli_num_rows($result) == 0) {
     <p>http://map.limpteam.ru/track.php?lat={0}&lon={1}&amptimestamp={2}&hdop={3}&altitude={4}&speed={5}&name=[ваше имя при регистрации]<b>&hash=[имя нового устройства]</b></p>
     </div>
     <div class='modal-footer'>
-    <button class='btn' data-dismiss='modal' aria-hidden='true'>Зыкрыть</button>
+    <button class='btn' data-dismiss='modal' aria-hidden='true'>Закрыть</button>
     </div>
     </div>
 
@@ -167,7 +167,7 @@ if (mysqli_num_rows($result) == 0) {
 	    $OUT .= "</table>Ваши устройства:<br>";
 	    }
     while ($row = mysqli_fetch_array($alldevices)) {
-	    $OUT.="<a href=showtrack.php?name=".$name."&hash=".$row['hash']."&delete=1><i class='icon-trash'></i></a> <a href='showtrack.php?name=".$name."&hash=".$row['hash']."&view=1'><span class='label label-info'>".$row['hash']."</span></a><br>";
+	    $OUT.="<a href=showtrack.php?name=".$name."&hash=".$row['hash']."&delete=1><i class='icon-trash'></i></a><a href=showtrack.php?name=".$name."&hash=".$row['hash']."&clear=1><i class='icon-remove' title='Очистить трек, но оставить устройство'></i></a> <a href='showtrack.php?name=".$name."&hash=".$row['hash']."&view=1'><span class='label label-info'>".$row['hash']."</span></a><br>";
 	    }
 
 	    $OUT .= "<br><a href='javascript: history.go(-1)'><i class='icon-arrow-left'></i>Назад</a><br>
@@ -246,6 +246,20 @@ if (mysqli_num_rows($result) == 0) {
 
 
 } else {
+
+ if ($_GET['clear'] == '1')  {
+    $hash=mysqli_real_escape_string($link, $_GET['hash']);
+    $name=mysqli_real_escape_string($link,$_GET['name']);
+    $clear=mysqli_query($link, "DELETE from archive WHERE name='$name' AND hash='$hash'");
+    if ($clear) {
+    header("Location:showtrack.php");
+    } else {
+    echo "ошибка";
+    }
+
+
+} else {
+
 	header('Refresh: 90; url='.$_SERVER["REQUEST_URI"]); 
 	while ($row = mysqli_fetch_array($result)) {
 	    $hash = $row['hash'];
@@ -269,13 +283,14 @@ if (mysqli_num_rows($result) == 0) {
     }
 //все точки юзера из базы
 	while ($row = mysqli_fetch_array($alldevices)) {
-	    $OUT.="<a href=showtrack.php?name=".$name."&hash=".$row['hash']."&delete=1><i class='icon-trash'></i></a> <a href='showtrack.php?name=".$name."&hash=".$row['hash']."&view=1'><span class='label label-info'>".$row['hash']."</span></a><br>";
+	    $OUT.="<a href=showtrack.php?name=".$name."&hash=".$row['hash']."&delete=1 title='удалить устройство'><i class='icon-trash'></i></a><a href=showtrack.php?name=".$name."&hash=".$row['hash']."&clear=1><i class='icon-remove' title='Очистить трек, но оставить устройство'></i></a> <a href='showtrack.php?name=".$name."&hash=".$row['hash']."&view=1'><span class='label label-info'>".$row['hash']."</span></a><br>";
 	    }
 	$OUT.="<a href='#myModal' role='button' data-toggle='modal'><i class='icon-plus'></i>Добавить устройство</a>";
 	$OUT.="     <br><a href='showtrack.php?name=".$name."&showallpoints=1'><i class='icon-map-marker'></i>Показать все мои устройства на карте</a>
 		    <br><a href='showtrack.php?name=".$name."&hash=".$hash."&showtrack=1'><i class='icon-eye-open'></i>Показать весь трек</a><br>
 		    <br><a href='auth.php?logout=1' class='btn btn-info'>Выход</a>
 	        ";
+			}
 		    }
 		}	
 	    }		
