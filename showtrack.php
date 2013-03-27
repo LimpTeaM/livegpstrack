@@ -144,6 +144,7 @@ if (mysqli_num_rows($result) == 0) {
       var map = L.map('map').setView([55.76, 37.64], 8);
       //map.locate({setView: true, maxZoom: 18});
       L.tileLayer('http://{s}.tile.cloudmade.com/6a47c48f55494a5f92c09fce0caf2051/997/256/{z}/{x}/{y}.png', {maxZoom: 18,}).addTo(map);
+    //L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 18,}).addTo(map);
     ";
     if ($_GET['view'] == '1') {
     header('Refresh: 90; url='.$_SERVER["REQUEST_URI"]);
