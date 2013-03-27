@@ -28,6 +28,7 @@ echo "
 <script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js'></script>
 <script src='http://cdn.leafletjs.com/leaflet-0.4/leaflet.js'></script>
 <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js'></script>
+<script src='geocoder.js'></script>
 <link href='/bootstrap/css/bootstrap.css' rel='stylesheet'>
 <link href='/bootstrap/css/bootstrap-responsive.css' rel='stylesheet'>
 </head>
@@ -42,8 +43,16 @@ echo "
 </div>
 </div>
 <div class='row-fluid'>
-      <div class='span5 offset1'><div id='map' style='height: 600px; border-radius: 6px; box-shadow: 0 8px 16px -8px #222;'></div></div>
-    <div class='span3'><span class='label label-info'>Введите имя точки и нажмите на карту</span> <label>Имя точки:</label> <input type='text' id='name'>
+    <div class='span5 offset1'><div id='map' style='height: 600px; border-radius: 6px; box-shadow: 0 8px 16px -8px #222;'></div></div>
+    <div class='span3'>
+    <span class='label label-info'>Введите имя точки и нажмите на карту</span>
+    <label>Имя точки:</label> <input type='text' id='name'><br>
+    <span class='label label-info'>Ваше местоположение:</span>
+    <div id='location'></div>
+</div>
+</div>
+</div>
+</div>
 </div>
 <script>
       var map = L.map('map').setView([55.76, 37.64], 9);
@@ -74,6 +83,7 @@ decodeURIComponent(msg);
 popup.setLatLng(e.latlng).setContent(msg).openOn(map);
 });
 }});
+map.on('locationfound', onLocationFound);
 </script>
 <br>
 <br>
