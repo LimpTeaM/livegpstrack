@@ -13,7 +13,7 @@ function onLocationFound(e) {
     var lat = e.latlng.lat;
     var lon = e.latlng.lng;
     L.marker(e.latlng).addTo(map).bindPopup('Вы где-то здесь. В пределах '+radius+' метров').openPopup();
-    L.circle(e.latlng, radius).addTo(map);
+    //L.circle(e.latlng, radius).addTo(map);
     $.getJSON('http://nominatim.openstreetmap.org/search?format=json&limit=1&q='+lat+' '+lon, function(data) {
         var items = [];
         $.each(data, function(key, val) {
