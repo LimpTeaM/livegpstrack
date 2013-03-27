@@ -43,7 +43,7 @@ echo "
 </div>
 </div>
 <div class='row-fluid'>
-    <div class='span5 offset1'><div id='map' style='height: 600px; border-radius: 6px; box-shadow: 0 8px 16px -8px #222;'></div></div>
+    <div class='span5 offset1'><div id='map' style='height: 700px; border-radius: 6px; box-shadow: 0 8px 16px -8px #222;'></div></div>
     <div class='span3'>
     <span class='label label-info'>Введите имя точки и нажмите на карту</span>
     <label>Имя точки:</label> <input type='text' id='name'><br>

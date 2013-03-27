@@ -137,7 +137,7 @@ if (mysqli_num_rows($result) == 0) {
     </div>
     </div>
 
-    <div id='map' style='height: 600px; border-radius: 6px; box-shadow: 0 8px 16px -8px #222;'></div>
+    <div id='map' style='height: 700px; border-radius: 6px; box-shadow: 0 8px 16px -8px #222;'></div>
     </div>
     <div class='span3'>
     <script>
