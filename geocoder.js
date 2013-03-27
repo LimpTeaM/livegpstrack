@@ -9,9 +9,10 @@ function ad() {
 };
 
 function onLocationFound(e) {
+    var radius = e.accuracy / 2;
     var lat = e.latlng.lat;
     var lon = e.latlng.lng;
-    L.marker(e.latlng).addTo(map).bindPopup('Вы где-то здесь').openPopup();
+    L.circle(e.latlng, radius).addTo(map).bindPopup('Вы где-то здесь. В пределах '+radius+' метров').openPopup();
     $.getJSON('http://nominatim.openstreetmap.org/search?format=json&limit=1&q='+lat+' '+lon, function(data) {
         var items = [];
         $.each(data, function(key, val) {
