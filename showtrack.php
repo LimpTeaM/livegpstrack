@@ -20,6 +20,7 @@ $OUT = "
 <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js'></script>
 <script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js'></script>
 <script src='http://cdn.leafletjs.com/leaflet-0.4/leaflet.js'></script>
+<script src='geocoder.js' type='text/javascript'></script>
 <script src='/bootstrap/js/bootstrap.js'></script>
 <link href='/bootstrap/css/bootstrap.css' rel='stylesheet'>
 <link href='/bootstrap/css/bootstrap-responsive.css' rel='stylesheet'>
@@ -154,7 +155,7 @@ if (mysqli_num_rows($result) == 0) {
             $OUT .= "<label class='label label-info'>".$row['hash']."</label>";
 	    $OUT .="<table class='table table-bordered'>
                     <tr><th>Последние координаты: </th></tr>
-                    <tr><td>".$row['lat']." ".$row['lon']." </td></tr>
+                    <tr><td id='coords'>".$row['lat']." ".$row['lon']." </td></tr>
                     <tr><th>Скорость</th></tr>
 		    <tr><td>".$row['speed']." км/ч</td><tr>
 		    <tr><th>Время:</th></tr><tr><td>".$row['timestamp']."</td></tr>
@@ -164,10 +165,14 @@ if (mysqli_num_rows($result) == 0) {
             } else  {
                 $OUT .= "<tr><td><font color=green>Высокая </font> (".$row['hdop'].")</td></tr>";
 	    }
-	    $OUT .= "</table>Ваши устройства:<br>";
-	    }
-    while ($row = mysqli_fetch_array($alldevices)) {
-	    $OUT.="<a href=showtrack.php?name=".$name."&hash=".$row['hash']."&delete=1><i class='icon-trash'></i></a><a href=showtrack.php?name=".$name."&hash=".$row['hash']."&clear=1><i class='icon-remove' title='Очистить трек, но оставить устройство'></i></a> <a href='showtrack.php?name=".$name."&hash=".$row['hash']."&view=1'><span class='label label-info'>".$row['hash']."</span></a><br>";
+	    $OUT.="<tr><th>Адрес</th></tr>";
+	    $OUT.="<tr><td id='coords1'></td></td>";
+	    $OUT.="</table>Ваши устройства:<br>";
+	    $OUT.="<script>ad();</script>";
+	    
+}
+while ($row = mysqli_fetch_array($alldevices)) {
+	    $OUT.="<a href='showtrack.php?name=".$name."&hash=".$row['hash']."&delete=1'><i class='icon-trash'></i></a><a href='showtrack.php?name=".$name."&hash=".$row['hash']."&clear=1'><i class='icon-remove' title='Очистить трек, но оставить устройство'></i></a> <a href='showtrack.php?name=".$name."&hash=".$row['hash']."&view=1'><span class='label label-info'>".$row['hash']."</span></a><br>";
 	    }
 
 	    $OUT .= "<br><a href='javascript: history.go(-1)'><i class='icon-arrow-left'></i>Назад</a><br>
@@ -268,7 +273,7 @@ if (mysqli_num_rows($result) == 0) {
 	    $OUT .= "<label class='label label-info'>".$row['hash']."</label>";
 	    $OUT .="<table class='table table-bordered'>
 		    <tr><th>Последние координаты: </th></tr>
-		    <tr><td>".$row['lat']." ".$row['lon']." </td></tr>
+		    <tr><td id='coords'>".$row['lat']." ".$row['lon']." </td></tr>
 		    <tr><th>Скорость</th></tr>
 		    <tr><td>".$row['speed']." км/ч</td><tr>
 		    <tr><th>Время:</th></tr><tr><td>".$row['timestamp']."</td></tr>
@@ -278,6 +283,8 @@ if (mysqli_num_rows($result) == 0) {
 	    } else  {
 		$OUT .= "<tr><td><font color=green>Высокая </font> (".$row['hdop'].")</td></tr>";
 	    }
+	    $OUT.="<tr><th>Адрес</th></tr>";
+            $OUT.="<tr><td id='coords1'><script>ad();</script></td></td>";
 	    $OUT .= "</table>
 		    Ваши устройства:<br>";
     }
