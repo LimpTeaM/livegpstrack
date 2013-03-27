@@ -59,6 +59,8 @@ echo "
       map.locate({setView: true, enableHighAccuracy: true, maxZoom: 18 });
     //  L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 18,}).addTo(map);
       L.tileLayer('http://{s}.tile.cloudmade.com/6a47c48f55494a5f92c09fce0caf2051/997/256/{z}/{x}/{y}.png', {maxZoom: 18,}).addTo(map);
+	map.on('locationfound', onLocationFound);
+
 ";
 
 while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
@@ -84,7 +86,6 @@ decodeURIComponent(msg);
 popup.setLatLng(e.latlng).setContent(msg).openOn(map);
 });
 }});
-map.on('locationfound', onLocationFound);
 </script>
 <br>
 <br>
