@@ -36,7 +36,7 @@ $OUT = "
 </div>
 </div>
 <div class='row-fluid'>
-<div class='span5 offset1'>
+<div class='span4 offset1'>
 ";
 if (!isset($_SESSION['user_id'])) {
 
