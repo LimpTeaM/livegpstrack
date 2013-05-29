@@ -7,6 +7,7 @@ $name=mysqli_real_escape_string($link,$_GET['name']);
 $lat=mysqli_real_escape_string($link, $_GET['lat']);
 $lon=mysqli_real_escape_string($link, $_GET['lon']);
 $speed=mysqli_real_escape_string($link, $_GET['speed']);
+$speed=intval($speed)*3.6;
 $hdop=mysqli_real_escape_string($link, $_GET['hdop']);
 $hash=mysqli_real_escape_string($link, $_GET['hash']);
 if (!isset($_GET['hash']) or ($_GET['hash'] == '')) {
