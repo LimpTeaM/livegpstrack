@@ -19,7 +19,7 @@ How to setup.
 
 3.setup mysql (create user and database)
 
-4.edit db.example.php for database connection.
+4.edit db.example.php for database connection and rename it.
 
     mv db.example.php db.php
 
