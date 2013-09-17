@@ -5,15 +5,21 @@ session_start();
 
 include "db.php";
 
-if (isset($_POST['rlogin']) && isset($_POST['rpassword'])) {
+if (isset($_POST['rlogin']) && isset($_POST['rpassword']))  {
 
-if (($_POST['rlogin'] == '') or ($_POST['rpassword']==''))  {
-
+if (($_POST['rlogin'] == '') or ($_POST['rpassword']==''))
+{
 echo("Пустое поле.");
 exit;
 
 } else { 
 
+if ((!preg_match("/^[a-zA-Z0-9]+$/",$_POST['rlogin'])) or (!preg_match("/^[a-zA-Z0-9]+$/",$_POST['rpassword']))) 
+{
+echo("Нельзя использовать такие символы");
+exit;
+}
+else {
 $login = mysqli_real_escape_string($link, $_POST['rlogin']);
 $password = md5($_POST['rpassword']);
 $sql=mysqli_query($link, "INSERT INTO auth (login, pass) VALUES ('$login', '$password')");
@@ -29,7 +35,7 @@ header('Refresh: 4;URL=showtrack.php');
 }
 }
 }
-
+}
 if (isset($_POST['login']) && isset($_POST['password']))
 {
     $login = mysqli_real_escape_string($link, $_POST['login']);

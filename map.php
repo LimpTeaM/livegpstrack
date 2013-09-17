@@ -1,6 +1,6 @@
 <?php
-error_reporting(E_ALL);
-ini_set("display_errors", 1);
+//error_reporting(E_ALL);
+//ini_set("display_errors", 1);
 session_start();
 header('Content-Type: text/html; charset=utf-8');
 include "db.php";
@@ -21,12 +21,12 @@ echo "
     <meta charset='utf-8' />
 
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-<link rel='stylesheet' href='http://cdn.leafletjs.com/leaflet-0.4/leaflet.css' />
+<link rel='stylesheet' href='http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css' />
  <!--[if lte IE 8]>
-     <link rel='stylesheet' href='http://cdn.leafletjs.com/leaflet-0.4/leaflet.ie.css' />
+     <link rel='stylesheet' href='http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css' />
  <![endif]-->
 <script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js'></script>
-<script src='http://cdn.leafletjs.com/leaflet-0.4/leaflet.js'></script>
+<script src='http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js'></script>
 <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js'></script>
 <script src='geocoder.js'></script>
 <link href='/bootstrap/css/bootstrap.css' rel='stylesheet'>
@@ -51,14 +51,11 @@ echo "
     <div id='location'></div>
 </div>
 </div>
-</div>
-</div>
-</div>
 <script>
       var map = L.map('map').setView([55.76, 37.64], 9);
       map.locate({setView: true, enableHighAccuracy: true, maxZoom: 18 });
     //  L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 18,}).addTo(map);
-      L.tileLayer('http://{s}.tile.cloudmade.com/6a47c48f55494a5f92c09fce0caf2051/997/256/{z}/{x}/{y}.png', {maxZoom: 18,}).addTo(map);
+        L.tileLayer('http://{s}.tile.cloudmade.com/6a47c48f55494a5f92c09fce0caf2051/997/256/{z}/{x}/{y}.png', {maxZoom: 18,}).addTo(map);
 	map.on('locationfound', onLocationFound);
 
 ";

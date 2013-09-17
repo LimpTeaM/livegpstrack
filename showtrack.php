@@ -12,14 +12,14 @@ $OUT = "
     <title>Карта</title>
     <meta charset='utf-8' />
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-<link rel='stylesheet' href='http://cdn.leafletjs.com/leaflet-0.4/leaflet.css' />
+<link rel='stylesheet' href='http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css' />
 
  <!--[if lte IE 8]>
-     <link rel='stylesheet' href='http://cdn.leafletjs.com/leaflet-0.4/leaflet.ie.css' />
+     <link rel='stylesheet' href='http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css' />
  <![endif]-->
 <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js'></script>
 <script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js'></script>
-<script src='http://cdn.leafletjs.com/leaflet-0.4/leaflet.js'></script>
+<script src='http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js'></script>
 <script src='geocoder.js' type='text/javascript'></script>
 <script src='/bootstrap/js/bootstrap.js'></script>
 <link href='/bootstrap/css/bootstrap.css' rel='stylesheet'>
@@ -223,7 +223,11 @@ while ($row = mysqli_fetch_array($alldevices)) {
 	$setview=mysqli_query($link,"SELECT lat,lon,timestamp FROM tracking WHERE name='$name' AND hash='$hash'");
 	
 	$OUT .= "]}}]};
-    	    L.geoJson(track).addTo(map);";
+    	    L.geoJson(track).addTo(map); 
+	//var dis1 = track.features[0].geometry.coordinates[0];
+	//var dis2 = track.features[0].geometry.coordinates[1];
+	//alert(dis1.distanceTo(dis2));
+	";
 	while ($row = mysqli_fetch_array($setview)) {
     
 	$OUT .="map.setView([".$row['lat'].", ".$row['lon']."],14);";
