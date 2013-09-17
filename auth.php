@@ -22,7 +22,7 @@ exit;
 else {
 $login = mysqli_real_escape_string($link, $_POST['rlogin']);
 $password = md5($_POST['rpassword']);
-$sql=mysqli_query($link, "INSERT INTO auth (login, pass) VALUES ('$login', '$password')");
+$sql=mysqli_query($link, "INSERT INTO auth (login, pass, date) VALUES ('$login', '$password', NOW());");
 
 if ($sql) {
 header('Refresh: 4;URL=showtrack.php');
