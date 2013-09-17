@@ -4,7 +4,7 @@
     error_reporting(E_ALL ^ E_WARNING);//включаем отображение ошибок
     set_time_limit(0);//чтоб скрипт выполнялся всегда, а не положенные 30 секунд по дефолту
     ob_implicit_flush();//выводить строки с помощью echo нужно сразу при их выводе, а не после полной загрузки страницы, как это делается по-умолчанию.
-    $address='83.229.149.147';
+    $address='';
     $port = 50001;//порт нашего сервера
     $sock = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);//создаём дескриптор сокетаsocket_set_option($sock, SOL_SOCKET, SO_REUSEADDR, 1);//задаём опции порта
     socket_bind($sock, $address, $port);//привязываес этот дескриптор к нашему адресу и порту
