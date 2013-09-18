@@ -62,7 +62,7 @@ $OUT="
 ";
 
 while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
- echo "L.marker([".$row['lat'].",".$row['lon']."]).addTo(map).bindPopup('".$row['name']."');";
+ $OUT.= "L.marker([".$row['lat'].",".$row['lon']."]).addTo(map).bindPopup('".$row['name']."');";
 } 
 
 $OUT.="
