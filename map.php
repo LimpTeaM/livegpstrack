@@ -11,9 +11,10 @@ if (!$link) {
     exit;
 } else {
     $result=mysqli_query($link, "SELECT * from points");
+
 };
 
-echo "
+$OUT="
 <!DOCTYPE html>
 <html>
 <head>
@@ -64,8 +65,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
  echo "L.marker([".$row['lat'].",".$row['lon']."]).addTo(map).bindPopup('".$row['name']."');";
 } 
 
-echo "
-
+$OUT.="
 var popup = L.popup();
 map.on('click', function(e) {
 var name = document.getElementById('name').value;
@@ -91,4 +91,5 @@ popup.setLatLng(e.latlng).setContent(msg).openOn(map);
 </div>
 </body>
 </html> ";
+echo $OUT;
 ?>
